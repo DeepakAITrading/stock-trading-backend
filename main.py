@@ -6,6 +6,11 @@ import os
 
 app = FastAPI()
 
+# ✅ This is the added root route
+@app.get("/")
+def read_root():
+    return {"status": "API is live and working!"}
+
 class LoginRequest(BaseModel):
     clientId: str
     password: str
@@ -24,6 +29,6 @@ def get_instruments(req: LoginRequest):
         instruments = obj.getInstruments(exchange='NSE')
         equity_symbols = [{"symbol": i["symbol"]} for i in instruments if i["symbol"].isalpha()]
 
-        return equity_symbols[:300]  # Return first 300 to avoid overloading frontend
+        return equity_symbols[:300]  # Limit to first 300 symbols
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
