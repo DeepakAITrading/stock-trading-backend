@@ -3,7 +3,7 @@ from smartapi import SmartConnect
 
 # ✅ Hardcoded credentials (only use for personal/test use)
 API_KEY = "8BZDjBnt"
-CLIENT_ID = "deepakdp1995"     # 🔁 Replace with your actual client ID
+CLIENT_ID = "deepakprabhu.28517@gmail.com"     # 🔁 Replace with your actual client ID
 PASSWORD = "Deepak$1995"       # 🔁 Replace with your actual password
 
 app = FastAPI()
