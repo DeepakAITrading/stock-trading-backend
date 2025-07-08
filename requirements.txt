@@ -1,3 +1,3 @@
 fastapi
 uvicorn[standard]
-smartapi-python
+smartapi-python==1.0.2
