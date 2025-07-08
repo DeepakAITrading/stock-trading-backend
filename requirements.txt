@@ -3,3 +3,4 @@ uvicorn[standard]
 smartapi-python==1.0.2
 twisted
 pyOpenSSL
+autobahn
