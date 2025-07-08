@@ -1,34 +1,22 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from smartapi import SmartConnect
-
-import os
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+# ... other imports
 
 app = FastAPI()
 
-# ✅ This is the added root route
-@app.get("/")
-def read_root():
-    return {"status": "API is live and working!"}
+# --- ADD THIS CORS MIDDLEWARE SECTION ---
+origins = [
+    "*"  # This allows all origins. For production, you might restrict this.
+]
 
-class LoginRequest(BaseModel):
-    clientId: str
-    password: str
-    apiKey: str
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], # Allows all methods, including POST and OPTIONS
+    allow_headers=["*"], # Allows all headers
+)
+# --- END OF CORS SECTION ---
 
-@app.post("/instruments")
-def get_instruments(req: LoginRequest):
-    try:
-        obj = SmartConnect(api_key=req.apiKey)
-        data = obj.generateSession(req.clientId, req.password)
-        token = data['data']['jwtToken']
 
-        # Save session token if needed
-        # obj.setAccessToken(token)
-
-        instruments = obj.getInstruments(exchange='NSE')
-        equity_symbols = [{"symbol": i["symbol"]} for i in instruments if i["symbol"].isalpha()]
-
-        return equity_symbols[:300]  # Limit to first 300 symbols
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+# ... The rest of your app code (@app.post("/instruments"), etc.) goes here ...
