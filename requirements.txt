@@ -1,7 +1,6 @@
 fastapi
 uvicorn[standard]
 smartapi-python==1.0.2
-Smartapi-python
 twisted
 pyOpenSSL
 autobahn
